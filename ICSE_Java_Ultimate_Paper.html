@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICSE Java — Ultimate Difficulty Theory Paper</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f5f0e8;
+    --red: #c0392b;
+    --gold: #b8860b;
+    --muted: #5a5047;
+    --rule: #c8bfae;
+    --code-bg: #1a1a2e;
+    --code-fg: #e0d7c8;
+    --ans-bg: #fff8f0;
+    --ans-border: #d4a017;
+    --section-A: #8b1a1a;
+    --section-B: #1a3a5c;
+    --section-C: #1a5c2e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #e8e0d0;
+    font-family: 'Source Serif 4', Georgia, serif;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--paper);
+    box-shadow: 0 0 60px rgba(0,0,0,0.3);
+    padding: 60px 70px 80px;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    border-top: 5px solid var(--ink);
+    border-bottom: 3px double var(--ink);
+    padding: 28px 0 22px;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .board-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+  .paper-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    line-height: 1.1;
+  }
+  .paper-sub {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  .meta-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .warning-band {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 2px;
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 32px;
+  }
+
+  /* ── INSTRUCTIONS ── */
+  .instructions {
+    border: 1.5px solid var(--rule);
+    padding: 18px 22px;
+    margin-bottom: 40px;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  .instructions strong { color: var(--ink); }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin: 44px 0 6px;
+    padding-bottom: 8px;
+    border-bottom: 2.5px solid;
+  }
+  .section-header.A { border-color: var(--section-A); }
+  .section-header.B { border-color: var(--section-B); }
+  .section-header.C { border-color: var(--section-C); }
+
+  .section-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+  }
+  .section-header.A .section-label { color: var(--section-A); }
+  .section-header.B .section-label { color: var(--section-B); }
+  .section-header.C .section-label { color: var(--section-C); }
+
+  .section-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .section-desc {
+    font-style: italic;
+    font-size: 0.87rem;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  /* ── QUESTION BLOCK ── */
+  .q-block {
+    margin-bottom: 36px;
+    page-break-inside: avoid;
+  }
+  .q-number-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .q-badge {
+    min-width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .badge-A { background: var(--section-A); color: white; }
+  .badge-B { background: var(--section-B); color: white; }
+  .badge-C { background: var(--section-C); color: white; }
+
+  .q-stem {
+    font-size: 0.97rem;
+    line-height: 1.65;
+    flex: 1;
+  }
+  .trap-tag {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 8px;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
+  .edge-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: white;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
+
+  /* ── CODE BLOCK ── */
+  pre {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.75;
+    padding: 18px 22px;
+    border-radius: 3px;
+    overflow-x: auto;
+    margin: 10px 0 10px 50px;
+    border-left: 3px solid var(--gold);
+  }
+  .kw  { color: #88c0d0; }
+  .ty  { color: #81a1c1; }
+  .str { color: #a3be8c; }
+  .num { color: #d08770; }
+  .cmt { color: #616e88; font-style: italic; }
+  .id  { color: #eceff4; }
+  .op  { color: #ebcb8b; }
+  .err-line { background: rgba(192,57,43,0.25); display: block; }
+
+  /* ── ANSWER REVEAL ── */
+  details {
+    margin: 8px 0 0 50px;
+  }
+  summary {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--gold);
+    padding: 6px 12px;
+    border: 1px dashed var(--gold);
+    display: inline-block;
+    user-select: none;
+  }
+  summary:hover { background: #fdf3dc; }
+  .answer-body {
+    background: var(--ans-bg);
+    border: 1px solid var(--ans-border);
+    border-top: none;
+    padding: 16px 20px;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+  .answer-body strong { color: var(--section-A); }
+  .answer-body .ans-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .answer-body code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    background: #ede8dd;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .answer-body pre {
+    background: #2c2c3e;
+    margin-left: 0;
+    font-size: 12px;
+  }
+  .divider {
+    border: none;
+    border-top: 1px dashed var(--rule);
+    margin: 30px 0;
+  }
+  .footer {
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="board-tag">ICSE · Computer Applications (86) · Class IX – X</div>
+    <div class="paper-title">The Ultimate Difficulty Paper</div>
+    <div class="paper-sub">Java Theory — 30 Questions for the Elite Candidate</div>
+    <div class="meta-row">
+      <span>TIME: 2 Hours</span>
+      <span>TOTAL MARKS: 100</span>
+      <span>SECTIONS: A · B · C</span>
+    </div>
+  </div>
+
+  <div class="warning-band">⚠ EVERY QUESTION IS A TRAP — READ EVERY LINE WITH SURGICAL PRECISION ⚠</div>
+
+  <!-- INSTRUCTIONS -->
+  <div class="instructions">
+    <strong>General Instructions:</strong> This paper contains three sections. Section A: Predict the Output (10 Qs × 3 marks). Section B: Find the Error (10 Qs × 3 marks). Section C: Logic &amp; Trace (10 Qs × 4 marks). <strong>All questions are compulsory.</strong> No partial credit for wrong final answers. Click <em>"▶ ANSWER &amp; LOGIC"</em> to verify reasoning. Scope is strictly ICSE Syllabus Classes IX–X (Java, BlueJ environment).
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SECTION A: PREDICT THE OUTPUT -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-header A">
+    <span class="section-label">Section A</span>
+    <span class="section-meta">Predict the Output · 10 Questions · 3 Marks Each</span>
+  </div>
+  <p class="section-desc">Write the exact output produced by each program, including any runtime exceptions. Mark "Runtime Error — [ExceptionName]" where applicable.</p>
+
+  <!-- Q1 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-A">1</span>
+      <div class="q-stem">What is the output of the following program?</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q1</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">int</span> <span class="id">a</span> <span class="op">=</span> <span class="num">5</span>;
+        <span class="ty">int</span> <span class="id">b</span> <span class="op">=</span> <span class="id">a</span><span class="op">++</span> <span class="op">+</span> <span class="op">++</span><span class="id">a</span> <span class="op">+</span> <span class="id">a</span><span class="op">++</span>;
+        System.out.println(<span class="id">a</span> <span class="op">+</span> <span class="str">" "</span> <span class="op">+</span> <span class="id">b</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Output</span>
+        <pre>8 19</pre>
+        <strong>Step-by-step evaluation of <code>a++ + ++a + a++</code>:</strong><br><br>
+        1. <code>a++</code> → returns <strong>5</strong> (post-increment; <code>a</code> becomes 6)<br>
+        2. <code>++a</code> → increments first to <strong>7</strong>, returns 7<br>
+        3. <code>a++</code> → returns <strong>7</strong> (post-increment; <code>a</code> becomes 8)<br><br>
+        So <code>b = 5 + 7 + 7 = 19</code>. Final <code>a = 8</code>.<br><br>
+        <strong>Common mistake:</strong> Students assume left-to-right "final" values of <code>a</code>, computing <code>5+7+8</code>. The key rule: each operand is fully evaluated (including its side-effect on <code>a</code>) before the next operand is read.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-A">2</span>
+      <div class="q-stem">What is the exact output?</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q2</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">String</span> <span class="id">s1</span> <span class="op">=</span> <span class="str">"Hello"</span>;
+        <span class="ty">String</span> <span class="id">s2</span> <span class="op">=</span> <span class="kw">new</span> <span class="ty">String</span>(<span class="str">"Hello"</span>);
+        System.out.println(<span class="id">s1</span> <span class="op">==</span> <span class="id">s2</span>);
+        System.out.println(<span class="id">s1</span>.equals(<span class="id">s2</span>));
+        System.out.println(<span class="id">s1</span>.compareTo(<span class="id">s2</span>));
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Output</span>
+        <pre>false
+true
+0</pre>
+        <strong>Why <code>==</code> is <code>false</code>:</strong> <code>s1</code> points to the String pool literal. <code>new String("Hello")</code> explicitly creates a new object on the heap. They are different references — different memory addresses — so <code>==</code> (reference equality) returns <code>false</code>.<br><br>
+        <strong>Why <code>.equals()</code> is <code>true</code>:</strong> <code>String.equals()</code> compares character content, not addresses. Both contain <em>"Hello"</em>, so it returns <code>true</code>.<br><br>
+        <strong>Why <code>compareTo()</code> is <code>0</code>:</strong> <code>compareTo</code> returns 0 when both strings are lexicographically identical.<br><br>
+        <strong>Deadly trap:</strong> Many students write <code>true</code> for <code>==</code>, forgetting that <code>new String()</code> bypasses the pool.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-A">3</span>
+      <div class="q-stem">Predict the output precisely.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q3</span> {
+    <span class="kw">static int</span> <span class="id">x</span> <span class="op">=</span> <span class="num">100</span>;
+    <span class="kw">static void</span> <span class="id">show</span>(<span class="ty">int</span> <span class="id">x</span>) {
+        <span class="id">x</span> <span class="op">+=</span> <span class="num">10</span>;
+        System.out.println(<span class="id">x</span>);
+    }
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        System.out.println(<span class="id">x</span>);
+        <span class="id">show</span>(<span class="id">x</span>);
+        System.out.println(<span class="id">x</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Output</span>
+        <pre>100
+110
+100</pre>
+        <strong>Variable Shadowing:</strong> The parameter <code>x</code> in <code>show(int x)</code> <em>shadows</em> the class-level static field <code>x</code>. Inside <code>show</code>, the name <code>x</code> refers exclusively to the <em>local parameter</em>, not the static field.<br><br>
+        Java is <strong>pass-by-value</strong>: <code>show(x)</code> copies the value 100 into the parameter. <code>x += 10</code> modifies only the copy. The static field remains 100.<br><br>
+        <strong>Common mistake:</strong> Students expect the static field to become 110. The shadow means any assignment inside <code>show</code> is purely local.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-A">4</span>
+      <div class="q-stem">Write the exact output, including spaces.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q4</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="kw">for</span> (<span class="ty">int</span> <span class="id">i</span> <span class="op">=</span> <span class="num">1</span>; <span class="id">i</span> <span class="op">&lt;=</span> <span class="num">4</span>; <span class="id">i</span><span class="op">++</span>) {
+            <span class="kw">for</span> (<span class="ty">int</span> <span class="id">j</span> <span class="op">=</span> <span class="id">i</span>; <span class="id">j</span> <span class="op">&lt;=</span> <span class="num">4</span>; <span class="id">j</span><span class="op">++</span>) {
+                System.out.print(<span class="id">i</span> <span class="op">*</span> <span class="id">j</span> <span class="op">+</span> <span class="str">" "</span>);
+            }
+            System.out.println();
+        }
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Output</span>
+        <pre>1 2 3 4 
+4 6 8 
+9 12 
+16 </pre>
+        <strong>Trace:</strong><br>
+        <code>i=1</code>: j=1→4: 1×1=1, 1×2=2, 1×3=3, 1×4=4<br>
+        <code>i=2</code>: j=2→4: 2×2=4, 2×3=6, 2×4=8<br>
+        <code>i=3</code>: j=3→4: 3×3=9, 3×4=12<br>
+        <code>i=4</code>: j=4: 4×4=16<br><br>
+        <strong>Key observation:</strong> The inner loop starts at <code>j = i</code>, not <code>j = 1</code>. This is the trap — each row is one element shorter than the previous. Students who assume <code>j</code> always starts at 1 will produce a wrong, square-shaped pattern.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-A">5</span>
+      <div class="q-stem">What is the output?</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q5</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">byte</span> <span class="id">b</span> <span class="op">=</span> <span class="num">127</span>;
+        <span class="id">b</span><span class="op">++</span>;
+        System.out.println(<span class="id">b</span>);
+        <span class="ty">byte</span> <span class="id">c</span> <span class="op">=</span> <span class="op">-</span><span class="num">128</span>;
+        <span class="id">c</span><span class="op">--</span>;
+        System.out.println(<span class="id">c</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Output</span>
+        <pre>-128
+127</pre>
+        <strong>Byte range:</strong> <code>byte</code> holds values from –128 to 127 (8-bit signed, two's complement).<br><br>
+        Incrementing 127 wraps around to –128 (overflow). Decrementing –128 wraps to 127 (underflow).<br><br>
+        <strong>Why no compile error?</strong> <code>b++</code> is a compound operator and implicitly casts the result back to <code>byte</code>. If you wrote <code>b = b + 1</code>, the compiler would reject it (int cannot be assigned to byte without an explicit cast).
+      </div>
+    </details>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-A">6</span>
+      <div class="q-stem">What is the exact output? Be precise about all values.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q6</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">String</span> <span class="id">s</span> <span class="op">=</span> <span class="str">"  Java  "</span>;
+        <span class="id">s</span>.trim();
+        System.out.println(<span class="id">s</span>.length());
+        <span class="id">s</span> <span class="op">=</span> <span class="id">s</span>.trim();
+        System.out.println(<span class="id">s</span>.length());
+        System.out.println(<span class="id">s</span>.replace(<span class="str">'a'</span>, <span class="str">'@'</span>));
+        System.out.println(<span class="id">s</span>.charAt(<span class="id">s</span>.length() <span class="op">-</span> <span class="num">1</span>));
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Output</span>
+        <pre>8
+4
+J@v@
+a</pre>
+        <strong>Line by line:</strong><br>
+        1. <code>s.trim()</code> on its own does nothing — Strings are <strong>immutable</strong>. The result is discarded. <code>s</code> still equals <code>"  Java  "</code>, length = <strong>8</strong>.<br>
+        2. <code>s = s.trim()</code> reassigns <code>s</code> to <code>"Java"</code>, length = <strong>4</strong>.<br>
+        3. <code>replace('a','@')</code> replaces all <code>a</code>s → <code>"J@v@"</code>. (Note: both 'a' occurrences are replaced.)<br>
+        4. <code>charAt(3)</code> → last character of <code>"Java"</code> is <code>'a'</code>.<br><br>
+        <strong>Most-missed line:</strong> The first <code>s.trim()</code> without reassignment. Students who forget immutability write length = 4 for the first print.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-A">7</span>
+      <div class="q-stem">What is printed?</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q7</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">int</span> <span class="id">n</span> <span class="op">=</span> <span class="num">2</span>;
+        <span class="kw">switch</span> (<span class="id">n</span>) {
+            <span class="kw">case</span> <span class="num">1</span>:  System.out.println(<span class="str">"One"</span>);
+            <span class="kw">case</span> <span class="num">2</span>:  System.out.println(<span class="str">"Two"</span>);
+            <span class="kw">case</span> <span class="num">3</span>:  System.out.println(<span class="str">"Three"</span>); <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="num">4</span>:  System.out.println(<span class="str">"Four"</span>);
+            <span class="kw">default</span>: System.out.println(<span class="str">"Default"</span>);
+        }
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Output</span>
+        <pre>Two
+Three</pre>
+        <strong>Fall-through mechanics:</strong> Execution starts at <code>case 2</code> and falls through to <code>case 3</code> (no <code>break</code> after case 2). The <code>break</code> after case 3 exits the switch before reaching case 4 or default.<br><br>
+        <strong>Key rule:</strong> A <code>break</code> stops fall-through; its absence means execution continues into the next case regardless of whether it matches.<br><br>
+        <strong>Common mistake:</strong> Writing only "Two" (as if an implicit break exists) or writing all four lines (forgetting the break after "Three").
+      </div>
+    </details>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-A">8</span>
+      <div class="q-stem">What is the output?</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q8</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">int</span>[] <span class="id">a</span> <span class="op">=</span> {<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>, <span class="num">40</span>, <span class="num">50</span>};
+        <span class="ty">int</span> <span class="id">i</span> <span class="op">=</span> <span class="num">1</span>;
+        System.out.println(<span class="id">a</span>[<span class="id">i</span><span class="op">++</span>] <span class="op">+</span> <span class="str">" "</span> <span class="op">+</span> <span class="id">a</span>[<span class="op">++</span><span class="id">i</span>] <span class="op">+</span> <span class="str">" "</span> <span class="op">+</span> <span class="id">i</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Output</span>
+        <pre>20 40 3</pre>
+        <strong>Evaluation (left-to-right):</strong><br>
+        1. <code>a[i++]</code>: uses <code>i=1</code> → <code>a[1]=20</code>; <code>i</code> becomes 2.<br>
+        2. <code>a[++i]</code>: increments first → <code>i=3</code>; uses <code>a[3]=40</code>.<br>
+        3. <code>i</code> is now 3.<br><br>
+        <strong>Trap within a trap:</strong> The string concatenation with <code>" "</code> means Java evaluates each sub-expression left to right. Students who evaluate all increments first and then substitute will get wrong indices.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-A">9</span>
+      <div class="q-stem">What happens when this runs?</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q9</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">String</span> <span class="id">s</span> <span class="op">=</span> <span class="str">"abcabc"</span>;
+        System.out.println(<span class="id">s</span>.indexOf(<span class="str">'c'</span>));
+        System.out.println(<span class="id">s</span>.lastIndexOf(<span class="str">'a'</span>));
+        System.out.println(<span class="id">s</span>.charAt(<span class="id">s</span>.length()));
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Output</span>
+        <pre>2
+3
+Runtime Error — StringIndexOutOfBoundsException: String index out of range: 6</pre>
+        <strong>First two lines:</strong> <code>indexOf('c')</code> finds the first 'c' at index 2. <code>lastIndexOf('a')</code> finds the last 'a' at index 3. Both print correctly.<br><br>
+        <strong>The fatal line:</strong> <code>s.length()</code> = 6. Valid indices are 0–5. <code>charAt(6)</code> requests an index that does not exist → <code>StringIndexOutOfBoundsException</code>.<br><br>
+        <strong>The rule:</strong> Last valid index is always <code>length() - 1</code>. Using <code>length()</code> directly with <code>charAt</code> is a guaranteed crash.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-A">10</span>
+      <div class="q-stem">Predict every line of output precisely.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q10</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">double</span> <span class="id">d</span> <span class="op">=</span> <span class="num">9.99</span>;
+        <span class="ty">int</span> <span class="id">i</span> <span class="op">=</span> (<span class="ty">int</span>) <span class="id">d</span>;
+        System.out.println(<span class="id">i</span>);
+        System.out.println(<span class="id">d</span> <span class="op">%</span> <span class="num">2</span>);
+        System.out.println((<span class="ty">int</span>)(<span class="id">d</span> <span class="op">%</span> <span class="num">2</span>));
+        <span class="ty">int</span> <span class="id">x</span> <span class="op">=</span> <span class="num">7</span>, <span class="id">y</span> <span class="op">=</span> <span class="num">2</span>;
+        <span class="ty">double</span> <span class="id">result</span> <span class="op">=</span> <span class="id">x</span> <span class="op">/</span> <span class="id">y</span>;
+        System.out.println(<span class="id">result</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Output</span>
+        <pre>9
+1.99
+1
+3.0</pre>
+        <strong>Line 1:</strong> Explicit cast <code>(int)9.99</code> truncates (not rounds) → 9.<br>
+        <strong>Line 2:</strong> <code>9.99 % 2</code> = 9.99 − 4×2 = 1.99 (floating-point modulo).<br>
+        <strong>Line 3:</strong> <code>(int)(1.99)</code> truncates → 1.<br>
+        <strong>Line 4 — THE DEADLY TRAP:</strong> <code>x / y</code> is <em>integer division</em> (7/2=3) because both operands are <code>int</code>. The result 3 is then widened to <code>double</code> and stored as <code>3.0</code>. The variable being a <code>double</code> does NOT make the division floating-point. To get <code>3.5</code>, one operand must be a <code>double</code>: e.g. <code>(double)x / y</code>.
+      </div>
+    </details>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SECTION B: FIND THE ERROR -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-header B">
+    <span class="section-label">Section B</span>
+    <span class="section-meta">Find the Error · 10 Questions · 3 Marks Each</span>
+  </div>
+  <p class="section-desc">Identify ALL errors in the given code. State: (a) the line/expression at fault, (b) the type of error (compile-time / runtime / logical), and (c) the correct fix.</p>
+
+  <!-- Q11 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-B">11</span>
+      <div class="q-stem">Find the error(s) in this program.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q11</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="kw">for</span> (<span class="ty">int</span> <span class="id">i</span> <span class="op">=</span> <span class="num">1</span>; <span class="id">i</span> <span class="op">&lt;=</span> <span class="num">5</span>; <span class="id">i</span><span class="op">++</span>)<span class="op">;</span>    <span class="cmt">// Line A</span>
+        {
+            System.out.println(<span class="str">"Value: "</span> <span class="op">+</span> <span class="id">i</span>);  <span class="cmt">// Line B</span>
+        }
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <strong>Two errors:</strong><br><br>
+        <strong>Error 1 (Logical → Line A):</strong> The semicolon <code>;</code> immediately after the <code>for(...)</code> creates an <em>empty loop body</em>. The loop runs 5 times doing nothing. The braces below form a separate, ordinary block that runs exactly once.<br><br>
+        <strong>Error 2 (Compile-time → Line B):</strong> Variable <code>i</code> was declared inside the <code>for</code> loop header (<code>int i = 1</code>). Its scope is limited to the loop. Once outside the loop, <code>i</code> does not exist. The compiler reports: <em>"cannot find symbol: variable i"</em>.<br><br>
+        <strong>Fix:</strong> Remove the semicolon on Line A <em>and</em> declare <code>int i</code> before the loop if it needs to be accessed outside:
+        <pre><span class="ty">int</span> i;
+<span class="kw">for</span> (i = 1; i &lt;= 5; i++) {
+    System.out.println(<span class="str">"Value: "</span> + i);
+}</pre>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-B">12</span>
+      <div class="q-stem">Identify the error(s).</div>
+    </div>
+<pre><span class="kw">class</span> <span class="id">Box</span> {
+    <span class="kw">private int</span> <span class="id">length</span>;
+    <span class="kw">private int</span> <span class="id">width</span>;
+    <span class="id">Box</span>(<span class="ty">int</span> <span class="id">l</span>, <span class="ty">int</span> <span class="id">w</span>) { <span class="id">length</span> <span class="op">=</span> <span class="id">l</span>; <span class="id">width</span> <span class="op">=</span> <span class="id">w</span>; }
+}
+
+<span class="kw">public class</span> <span class="id">Q12</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="id">Box</span> <span class="id">b</span> <span class="op">=</span> <span class="kw">new</span> <span class="id">Box</span>(<span class="num">5</span>, <span class="num">3</span>);
+        System.out.println(<span class="id">b</span>.<span class="id">length</span> <span class="op">*</span> <span class="id">b</span>.<span class="id">width</span>);  <span class="cmt">// Line A</span>
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <strong>Error (Compile-time → Line A):</strong> <code>length</code> and <code>width</code> are declared <code>private</code> in <code>Box</code>. Private members are accessible <em>only within the declaring class</em>. Accessing them from <code>Q12</code> (a different class) violates encapsulation rules.<br><br>
+        Compiler message: <em>"length has private access in Box"</em><br><br>
+        <strong>Fix:</strong> Add public getter methods to <code>Box</code>:
+        <pre><span class="kw">public int</span> getLength() { <span class="kw">return</span> length; }
+<span class="kw">public int</span> getWidth()  { <span class="kw">return</span> width;  }</pre>
+        Then use <code>b.getLength() * b.getWidth()</code>.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-B">13</span>
+      <div class="q-stem">Find the error(s).</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q13</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">byte</span> <span class="id">a</span> <span class="op">=</span> <span class="num">40</span>;
+        <span class="ty">byte</span> <span class="id">b</span> <span class="op">=</span> <span class="num">50</span>;
+        <span class="ty">byte</span> <span class="id">c</span> <span class="op">=</span> <span class="id">a</span> <span class="op">+</span> <span class="id">b</span>;  <span class="cmt">// Line A</span>
+        System.out.println(<span class="id">c</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <strong>Error (Compile-time → Line A):</strong> In Java, any arithmetic operation on <code>byte</code>, <code>short</code>, or <code>char</code> operands automatically promotes the result to <code>int</code>. So <code>a + b</code> produces an <code>int</code>. Assigning an <code>int</code> to a <code>byte</code> without an explicit cast is a compile-time error: <em>"possible lossy conversion from int to byte"</em>.<br><br>
+        Note: Even though 40+50=90 fits in a byte, the compiler does not evaluate the expression at this stage.<br><br>
+        <strong>Fix:</strong> <code>byte c = (byte)(a + b);</code>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-B">14</span>
+      <div class="q-stem">Find the error(s). What will the program actually print?</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Circle</span> {
+    <span class="ty">double</span> <span class="id">radius</span>;
+    <span class="kw">void</span> <span class="id">Circle</span>(<span class="ty">double</span> <span class="id">r</span>) {  <span class="cmt">// Line A</span>
+        <span class="id">radius</span> <span class="op">=</span> <span class="id">r</span>;
+    }
+    <span class="ty">double</span> <span class="id">area</span>() {
+        <span class="kw">return</span> <span class="num">3.14</span> <span class="op">*</span> <span class="id">radius</span> <span class="op">*</span> <span class="id">radius</span>;
+    }
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="id">Circle</span> <span class="id">c</span> <span class="op">=</span> <span class="kw">new</span> <span class="id">Circle</span>(<span class="num">7.0</span>);
+        System.out.println(<span class="id">c</span>.area());
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <strong>Error (Logical → Line A):</strong> Adding <code>void</code> before <code>Circle(double r)</code> turns it into a <em>regular method</em>, not a constructor. Constructors must have <strong>no return type whatsoever</strong> — not even <code>void</code>.<br><br>
+        <strong>Consequence:</strong> Java creates a <em>default no-argument constructor</em> automatically. When <code>new Circle(7.0)</code> is called, Java looks for a constructor with a <code>double</code> parameter — but only a <em>method</em> named <code>Circle</code> exists, not a matching constructor. This causes a <strong>compile-time error</strong>: <em>"no suitable constructor found for Circle(double)"</em>.<br><br>
+        <strong>Fix:</strong> Remove <code>void</code>: <code>Circle(double r) { radius = r; }</code>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-B">15</span>
+      <div class="q-stem">Find the error(s).</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q15</span> {
+    <span class="ty">int</span> <span class="id">count</span> <span class="op">=</span> <span class="num">0</span>;
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="id">count</span><span class="op">++</span>;           <span class="cmt">// Line A</span>
+        System.out.println(<span class="id">count</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <strong>Error (Compile-time → Line A):</strong> <code>count</code> is a non-static (instance) variable. The <code>main</code> method is <code>static</code>, meaning it runs without any object instance. A static method cannot directly access instance variables because no <code>this</code> reference exists in that context.<br><br>
+        Compiler message: <em>"non-static variable count cannot be referenced from a static context"</em><br><br>
+        <strong>Fix Option 1:</strong> Make <code>count</code> static: <code>static int count = 0;</code><br>
+        <strong>Fix Option 2:</strong> Create an object and access through it:
+        <pre><span class="id">Q15</span> obj = <span class="kw">new</span> <span class="id">Q15</span>();
+obj.count++;
+System.out.println(obj.count);</pre>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-B">16</span>
+      <div class="q-stem">Find the error(s). What does it actually print?</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q16</span> {
+    <span class="kw">static int</span> <span class="id">add</span>(<span class="ty">int</span> <span class="id">a</span>, <span class="ty">int</span> <span class="id">b</span>) {
+        <span class="kw">return</span> <span class="id">a</span> <span class="op">+</span> <span class="id">b</span>;
+    }
+    <span class="kw">static double</span> <span class="id">add</span>(<span class="ty">int</span> <span class="id">a</span>, <span class="ty">int</span> <span class="id">b</span>) { <span class="cmt">// Line A</span>
+        <span class="kw">return</span> (<span class="ty">double</span>)(<span class="id">a</span> <span class="op">+</span> <span class="id">b</span>);
+    }
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        System.out.println(<span class="id">add</span>(<span class="num">3</span>, <span class="num">4</span>));
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <strong>Error (Compile-time → Line A):</strong> Method overloading in Java requires methods to differ in their <strong>parameter list</strong> (number, types, or order of parameters). Two methods that differ <em>only</em> in return type are <strong>not valid overloads</strong> — they are duplicate declarations.<br><br>
+        Compiler message: <em>"add(int, int) is already defined"</em><br><br>
+        <strong>Key rule:</strong> The return type is NOT part of the method signature for overloading resolution. The call <code>add(3, 4)</code> would be ambiguous even if it compiled.<br><br>
+        <strong>Fix:</strong> Change the parameter list, e.g. <code>static double add(double a, double b)</code>.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-B">17</span>
+      <div class="q-stem">Find the error(s).</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q17</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">int</span>[] <span class="id">arr</span> <span class="op">=</span> <span class="kw">new int</span>[<span class="num">5</span>];
+        <span class="kw">for</span> (<span class="ty">int</span> <span class="id">i</span> <span class="op">=</span> <span class="num">0</span>; <span class="id">i</span> <span class="op">&lt;=</span> <span class="num">5</span>; <span class="id">i</span><span class="op">++</span>) {  <span class="cmt">// Line A</span>
+            <span class="id">arr</span>[<span class="id">i</span>] <span class="op">=</span> <span class="id">i</span> <span class="op">*</span> <span class="num">10</span>;
+        }
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <strong>Error (Runtime → Line A):</strong> The condition <code>i &lt;= 5</code> allows <code>i</code> to reach 5. But <code>arr</code> has size 5, so valid indices are 0–4. When <code>i=5</code>: <code>arr[5]</code> is accessed, which is out of bounds.<br><br>
+        Runtime exception: <em>"ArrayIndexOutOfBoundsException: Index 5 out of bounds for length 5"</em><br><br>
+        <strong>Fix:</strong> Change <code>i &lt;= 5</code> to <code>i &lt; 5</code> (or equivalently <code>i &lt;= arr.length - 1</code>).<br><br>
+        <strong>Best practice:</strong> Always use <code>i &lt; arr.length</code> as the loop condition to avoid this class of error.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-B">18</span>
+      <div class="q-stem">Find the error(s).</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q18</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">int</span> <span class="id">sum</span>;           <span class="cmt">// Line A</span>
+        <span class="kw">for</span> (<span class="ty">int</span> <span class="id">i</span> <span class="op">=</span> <span class="num">1</span>; <span class="id">i</span> <span class="op">&lt;=</span> <span class="num">5</span>; <span class="id">i</span><span class="op">++</span>) {
+            <span class="id">sum</span> <span class="op">+=</span> <span class="id">i</span>;         <span class="cmt">// Line B</span>
+        }
+        System.out.println(<span class="id">sum</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <strong>Error (Compile-time → Line B):</strong> <code>sum</code> is a local variable declared without initialization. Java requires all local variables to be explicitly initialized before use. <code>sum += i</code> reads <code>sum</code> before it has been assigned any value.<br><br>
+        Compiler message: <em>"variable sum might not have been initialized"</em><br><br>
+        <strong>Contrast with instance variables:</strong> If <code>sum</code> were declared outside a method (as an instance or static field), it would automatically default to 0. But local variables have <strong>no default value</strong>.<br><br>
+        <strong>Fix:</strong> Initialize on declaration: <code>int sum = 0;</code>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-B">19</span>
+      <div class="q-stem">Find the error(s).</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q19</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">String</span> <span class="id">s1</span> <span class="op">=</span> <span class="str">"  42  "</span>;
+        <span class="ty">String</span> <span class="id">s2</span> <span class="op">=</span> <span class="str">"3.14"</span>;
+        <span class="ty">int</span> <span class="id">a</span> <span class="op">=</span> Integer.parseInt(<span class="id">s1</span>);         <span class="cmt">// Line A</span>
+        <span class="ty">int</span> <span class="id">b</span> <span class="op">=</span> Integer.parseInt(<span class="id">s2</span>);         <span class="cmt">// Line B</span>
+        System.out.println(<span class="id">a</span> <span class="op">+</span> <span class="id">b</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <strong>Two errors:</strong><br><br>
+        <strong>Line A (Runtime):</strong> <code>Integer.parseInt("  42  ")</code> — the string contains leading/trailing spaces. <code>parseInt</code> does <strong>not</strong> tolerate whitespace and throws <em>NumberFormatException</em>. Fix: <code>Integer.parseInt(s1.trim())</code>.<br><br>
+        <strong>Line B (Runtime):</strong> <code>Integer.parseInt("3.14")</code> — the string contains a decimal point. <code>parseInt</code> parses integer strings only; a decimal point is an invalid character → <em>NumberFormatException</em>. Fix: use <code>Double.parseDouble(s2)</code> (or <code>Float.parseFloat</code>) instead.<br><br>
+        <strong>Important:</strong> Both are <em>runtime</em> errors, not compile-time. The code compiles successfully. The program crashes at Line A first.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-B">20</span>
+      <div class="q-stem">Find all errors and describe the intended vs actual behaviour.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q20</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">char</span> <span class="id">grade</span> <span class="op">=</span> <span class="str">'B'</span>;
+        <span class="kw">switch</span> (<span class="id">grade</span>) {
+            <span class="kw">case</span> <span class="str">"A"</span>: System.out.println(<span class="str">"Excellent"</span>); <span class="kw">break</span>; <span class="cmt">// Line A</span>
+            <span class="kw">case</span> <span class="str">'B'</span>: System.out.println(<span class="str">"Good"</span>); <span class="kw">break</span>;
+            <span class="kw">default</span>:  System.out.println(<span class="str">"Average"</span>);
+        }
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <strong>Error (Compile-time → Line A):</strong> The switch expression uses a <code>char</code> (<code>grade</code>). Case labels must use compatible types. <code>"A"</code> is a <code>String</code> literal (double-quotes), not a <code>char</code> literal. Using a <code>String</code> label in a <code>char</code> switch is a type mismatch → compile error.<br><br>
+        Compiler message: <em>"incompatible types: String cannot be converted to char"</em><br><br>
+        <strong>Fix:</strong> Change <code>"A"</code> to <code>'A'</code> (single quotes for char literals).<br><br>
+        <strong>After the fix:</strong> grade='B' matches case 'B', prints "Good", break exits → output: <code>Good</code>.
+      </div>
+    </details>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SECTION C: LOGIC & TRACE -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-header C">
+    <span class="section-label">Section C</span>
+    <span class="section-meta">Logic &amp; Trace · 10 Questions · 4 Marks Each</span>
+  </div>
+  <p class="section-desc">Show the full working/trace for each question. Final answer alone without logical steps earns zero marks.</p>
+
+  <!-- Q21 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-C">21</span>
+      <div class="q-stem">Trace the loop and determine the final value of <code>sum</code>.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q21</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">int</span> <span class="id">sum</span> <span class="op">=</span> <span class="num">0</span>;
+        <span class="kw">for</span> (<span class="ty">int</span> <span class="id">i</span> <span class="op">=</span> <span class="num">1</span>; <span class="id">i</span> <span class="op">&lt;=</span> <span class="num">10</span>; <span class="id">i</span><span class="op">++</span>) {
+            <span class="kw">if</span> (<span class="id">i</span> <span class="op">%</span> <span class="num">3</span> <span class="op">==</span> <span class="num">0</span>) <span class="kw">continue</span>;
+            <span class="kw">if</span> (<span class="id">i</span> <span class="op">&gt;</span> <span class="num">7</span>)    <span class="kw">break</span>;
+            <span class="id">sum</span> <span class="op">+=</span> <span class="id">i</span>;
+        }
+        System.out.println(sum);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Full Trace</span>
+        <pre>i=1: 1%3≠0, 1≤7 → sum = 1
+i=2: 2%3≠0, 2≤7 → sum = 3
+i=3: 3%3=0 → continue (skip sum+=3)
+i=4: 4%3≠0, 4≤7 → sum = 7
+i=5: 5%3≠0, 5≤7 → sum = 12
+i=6: 6%3=0 → continue (skip sum+=6)
+i=7: 7%3≠0, 7≤7 → sum = 19
+i=8: 8%3≠0, 8 > 7 → break</pre>
+        <strong>Output: 19</strong><br><br>
+        <strong>Order of checks matters:</strong> The <code>continue</code> check runs BEFORE the <code>break</code> check. For i=6: multiples of 3 are skipped via <code>continue</code> before the <code>i &gt; 7</code> test is even reached. This is why 6 is not added despite 6 ≤ 7.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q22 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-C">22</span>
+      <div class="q-stem">Trace the <code>do-while</code> loop and write the complete output.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q22</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">int</span> <span class="id">i</span> <span class="op">=</span> <span class="num">10</span>;
+        <span class="kw">do</span> {
+            System.out.print(<span class="id">i</span> <span class="op">+</span> <span class="str">" "</span>);
+            <span class="id">i</span> <span class="op">-=</span> <span class="num">3</span>;
+        } <span class="kw">while</span> (<span class="id">i</span> <span class="op">&gt;</span> <span class="num">0</span>);
+        System.out.println(<span class="id">i</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Full Trace</span>
+        <pre>Iteration 1: print 10, i = 10-3 = 7.  Check: 7>0 → true
+Iteration 2: print 7,  i = 7-3  = 4.  Check: 4>0 → true
+Iteration 3: print 4,  i = 4-3  = 1.  Check: 1>0 → true
+Iteration 4: print 1,  i = 1-3  = -2. Check: -2>0 → false → exit
+After loop: print -2</pre>
+        <strong>Output:</strong>
+        <pre>10 7 4 1 -2</pre>
+        <strong>Key trap:</strong> The loop body always runs at least once (condition checked <em>after</em> execution). After the final iteration, <code>i = -2</code> and that value is printed by <code>println(i)</code> after the loop. Many students stop the trace at <code>i=1</code> thinking the loop exits when <code>i</code> is about to become negative.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q23 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-C">23</span>
+      <div class="q-stem">Trace this nested loop and state the final value of <code>count</code>.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q23</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">int</span> <span class="id">count</span> <span class="op">=</span> <span class="num">0</span>;
+        <span class="kw">for</span> (<span class="ty">int</span> <span class="id">i</span> <span class="op">=</span> <span class="num">1</span>; <span class="id">i</span> <span class="op">&lt;=</span> <span class="num">6</span>; <span class="id">i</span><span class="op">++</span>) {
+            <span class="kw">for</span> (<span class="ty">int</span> <span class="id">j</span> <span class="op">=</span> <span class="num">1</span>; <span class="id">j</span> <span class="op">&lt;=</span> <span class="id">i</span>; <span class="id">j</span><span class="op">++</span>) {
+                <span class="kw">if</span> ((<span class="id">i</span> <span class="op">+</span> <span class="id">j</span>) <span class="op">%</span> <span class="num">2</span> <span class="op">==</span> <span class="num">0</span>) <span class="id">count</span><span class="op">++</span>;
+            }
+        }
+        System.out.println(<span class="id">count</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Full Trace — (i+j) is even when both i and j have the same parity</span>
+        <pre>i=1: j=1 → 1+1=2 (even) ✓         count=1
+i=2: j=1 → 3 odd; j=2 → 4 even ✓  count=2
+i=3: j=1 → 4✓; j=2 → 5; j=3 → 6✓ count=4
+i=4: j=1→5; j=2→6✓; j=3→7; j=4→8✓ count=6
+i=5: j=1→6✓;j=2→7;j=3→8✓;j=4→9;j=5→10✓ count=9
+i=6: j=1→7;j=2→8✓;j=3→9;j=4→10✓;j=5→11;j=6→12✓ count=12</pre>
+        <strong>Output: 12</strong><br><br>
+        <strong>Pattern:</strong> <code>(i+j)</code> is even ⟺ both are odd or both are even. For each row <code>i</code>, the count of valid <code>j</code>s is ⌈i/2⌉. Rows 1–6: 1+1+2+2+3+3 = 12. ✓
+      </div>
+    </details>
+  </div>
+
+  <!-- Q24 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-C">24</span>
+      <div class="q-stem">Trace this switch statement with <code>char</code> input and write the complete output.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q24</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">char</span> <span class="id">c</span> <span class="op">=</span> <span class="str">'e'</span>;
+        <span class="kw">switch</span> (<span class="id">c</span>) {
+            <span class="kw">default</span>: System.out.println(<span class="str">"Consonant"</span>);  <span class="cmt">// No break!</span>
+            <span class="kw">case</span> <span class="str">'a'</span>:
+            <span class="kw">case</span> <span class="str">'e'</span>: System.out.println(<span class="str">"Vowel"</span>); <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="str">'i'</span>: System.out.println(<span class="str">"Vowel i"</span>);
+        }
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Output</span>
+        <pre>Vowel</pre>
+        <strong>Trace:</strong><br>
+        <code>c = 'e'</code>: Java searches all case labels first. It finds a match at <code>case 'e'</code>. Execution begins there, printing <em>"Vowel"</em>. The <code>break</code> exits the switch.<br><br>
+        <strong>The fiendish trap — default placement:</strong> <code>default</code> is placed first, before <code>case 'e'</code>. A common misconception is that <code>default</code> always executes if nothing matches, or that it executes first because it's listed first. In Java, <code>default</code> is only entered when <em>no case label matches</em>. Since <code>'e'</code> matches, <code>default</code> is completely skipped — despite appearing before <code>case 'e'</code> in the source.<br><br>
+        <strong>Variant question:</strong> What if <code>c = 'z'</code>? Then: default runs → prints "Consonant", falls through (no break) → case 'a'/'e' block → prints "Vowel", break exits. Output would be: Consonant / Vowel.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q25 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-C">25</span>
+      <div class="q-stem">Trace the method calls and write the complete output.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q25</span> {
+    <span class="kw">static void</span> <span class="id">show</span>(<span class="ty">int</span> <span class="id">x</span>) {
+        System.out.println(<span class="str">"int: "</span> <span class="op">+</span> <span class="id">x</span>);
+    }
+    <span class="kw">static void</span> <span class="id">show</span>(<span class="ty">double</span> <span class="id">x</span>) {
+        System.out.println(<span class="str">"double: "</span> <span class="op">+</span> <span class="id">x</span>);
+    }
+    <span class="kw">static void</span> <span class="id">show</span>(<span class="ty">int</span> <span class="id">x</span>, <span class="ty">int</span> <span class="id">y</span>) {
+        System.out.println(<span class="str">"two-int: "</span> <span class="op">+</span> (<span class="id">x</span> <span class="op">+</span> <span class="id">y</span>));
+    }
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="id">show</span>(<span class="num">10</span>);
+        <span class="id">show</span>(<span class="num">3.5f</span>);
+        <span class="id">show</span>(<span class="num">2</span>, <span class="num">8</span>);
+        <span class="id">show</span>(<span class="str">'Z'</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Output</span>
+        <pre>int: 10
+double: 3.5
+two-int: 10
+int: 90</pre>
+        <strong>Call-by-call resolution:</strong><br>
+        1. <code>show(10)</code> → exact match with <code>show(int)</code> → <em>int: 10</em><br>
+        2. <code>show(3.5f)</code> → argument is <code>float</code>. No <code>show(float)</code> exists. Java widens: <code>float → double</code> → <code>show(double)</code> → <em>double: 3.5</em><br>
+        3. <code>show(2, 8)</code> → exact match with <code>show(int, int)</code> → prints <em>two-int: 10</em><br>
+        4. <code>show('Z')</code> → <strong>Trap!</strong> No <code>show(char)</code> exists. Java widens: <code>char → int</code>. <code>'Z'</code> has ASCII value 90. → <code>show(int)</code> → <em>int: 90</em><br><br>
+        <strong>Rule:</strong> When no exact match exists, Java promotes the argument to the next wider compatible type. <code>char</code> widens to <code>int</code> before <code>double</code>.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q26 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-C">26</span>
+      <div class="q-stem">Trace the 2D array operations and state the output.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q26</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">int</span>[][] <span class="id">m</span> <span class="op">=</span> {{<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>},{<span class="num">4</span>,<span class="num">5</span>,<span class="num">6</span>},{<span class="num">7</span>,<span class="num">8</span>,<span class="num">9</span>}};
+        <span class="ty">int</span> <span class="id">d</span> <span class="op">=</span> <span class="num">0</span>, <span class="id">ad</span> <span class="op">=</span> <span class="num">0</span>;
+        <span class="kw">for</span> (<span class="ty">int</span> <span class="id">i</span> <span class="op">=</span> <span class="num">0</span>; <span class="id">i</span> <span class="op">&lt;</span> <span class="num">3</span>; <span class="id">i</span><span class="op">++</span>) {
+            <span class="id">d</span>  <span class="op">+=</span> <span class="id">m</span>[<span class="id">i</span>][<span class="id">i</span>];
+            <span class="id">ad</span> <span class="op">+=</span> <span class="id">m</span>[<span class="id">i</span>][<span class="num">2</span> <span class="op">-</span> <span class="id">i</span>];
+        }
+        System.out.println(<span class="id">d</span> <span class="op">+</span> <span class="str">" "</span> <span class="op">+</span> <span class="id">ad</span> <span class="op">+</span> <span class="str">" "</span> <span class="op">+</span> (<span class="id">d</span> <span class="op">-</span> <span class="id">ad</span>));
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Full Trace</span>
+        <pre>Matrix:  [1,2,3]
+         [4,5,6]
+         [7,8,9]
+
+Main diagonal (m[i][i]):
+  i=0: m[0][0]=1
+  i=1: m[1][1]=5
+  i=2: m[2][2]=9   → d = 15
+
+Anti-diagonal (m[i][2-i]):
+  i=0: m[0][2]=3
+  i=1: m[1][1]=5
+  i=2: m[2][0]=7   → ad = 15
+
+Output: 15 15 0</pre>
+        <strong>The trap:</strong> Both diagonals share the centre element <code>m[1][1]=5</code>, so their sums are equal. The difference <code>d - ad = 0</code>, not 2 or some other intuitive answer. Students who forget the shared centre element compute the difference as non-zero.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q27 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-C">27</span>
+      <div class="q-stem">Trace the constructor overloading and determine what is printed.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Counter</span> {
+    <span class="ty">int</span> <span class="id">val</span>;
+    <span class="id">Counter</span>() {
+        <span class="id">val</span> <span class="op">=</span> <span class="num">10</span>;
+        System.out.println(<span class="str">"Default: "</span> <span class="op">+</span> <span class="id">val</span>);
+    }
+    <span class="id">Counter</span>(<span class="ty">int</span> <span class="id">v</span>) {
+        <span class="id">val</span> <span class="op">=</span> <span class="id">v</span> <span class="op">*</span> <span class="num">2</span>;
+        System.out.println(<span class="str">"Param: "</span> <span class="op">+</span> <span class="id">val</span>);
+    }
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="id">Counter</span> <span class="id">a</span> <span class="op">=</span> <span class="kw">new</span> <span class="id">Counter</span>();
+        <span class="id">Counter</span> <span class="id">b</span> <span class="op">=</span> <span class="kw">new</span> <span class="id">Counter</span>(<span class="num">7</span>);
+        <span class="id">Counter</span> <span class="id">c</span> <span class="op">=</span> <span class="kw">new</span> <span class="id">Counter</span>(<span class="id">a</span>.<span class="id">val</span>);
+        System.out.println(<span class="id">a</span>.<span class="id">val</span> <span class="op">+</span> <span class="id">b</span>.<span class="id">val</span> <span class="op">+</span> <span class="id">c</span>.<span class="id">val</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Full Trace</span>
+        <pre>new Counter()   → default constructor → val=10
+                 prints: Default: 10
+                 a.val = 10
+
+new Counter(7)  → param constructor → val=7*2=14
+                 prints: Param: 14
+                 b.val = 14
+
+new Counter(a.val) → a.val=10, so Counter(10)
+                   → param constructor → val=10*2=20
+                   prints: Param: 20
+                   c.val = 20
+
+Final: a.val+b.val+c.val = 10+14+20 = 44</pre>
+        <strong>Output:</strong>
+        <pre>Default: 10
+Param: 14
+Param: 20
+44</pre>
+        <strong>Trap:</strong> The third object uses <code>a.val</code> (which is 10, not 7) as its parameter. Students who carry over the 7 from the second constructor will compute <code>c.val = 14</code> and get a wrong sum of 38.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q28 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-C">28</span>
+      <div class="q-stem">Trace the bubble sort and write the array state after each full pass.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q28</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">int</span>[] <span class="id">a</span> <span class="op">=</span> {<span class="num">9</span>, <span class="num">3</span>, <span class="num">7</span>, <span class="num">1</span>, <span class="num">5</span>};
+        <span class="ty">int</span> <span class="id">n</span> <span class="op">=</span> <span class="id">a</span>.length;
+        <span class="kw">for</span> (<span class="ty">int</span> <span class="id">i</span> <span class="op">=</span> <span class="num">0</span>; <span class="id">i</span> <span class="op">&lt;</span> <span class="id">n</span> <span class="op">-</span> <span class="num">1</span>; <span class="id">i</span><span class="op">++</span>) {
+            <span class="kw">for</span> (<span class="ty">int</span> <span class="id">j</span> <span class="op">=</span> <span class="num">0</span>; <span class="id">j</span> <span class="op">&lt;</span> <span class="id">n</span> <span class="op">-</span> <span class="num">1</span> <span class="op">-</span> <span class="id">i</span>; <span class="id">j</span><span class="op">++</span>) {
+                <span class="kw">if</span> (<span class="id">a</span>[<span class="id">j</span>] <span class="op">&gt;</span> <span class="id">a</span>[<span class="id">j</span> <span class="op">+</span> <span class="num">1</span>]) {
+                    <span class="ty">int</span> <span class="id">t</span> <span class="op">=</span> <span class="id">a</span>[<span class="id">j</span>]; <span class="id">a</span>[<span class="id">j</span>] <span class="op">=</span> <span class="id">a</span>[<span class="id">j</span><span class="op">+</span><span class="num">1</span>]; <span class="id">a</span>[<span class="id">j</span><span class="op">+</span><span class="num">1</span>] <span class="op">=</span> <span class="id">t</span>;
+                }
+            }
+        }
+        <span class="kw">for</span> (<span class="ty">int</span> <span class="id">x</span> : <span class="id">a</span>) System.out.print(<span class="id">x</span> <span class="op">+</span> <span class="str">" "</span>);
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Pass-by-pass Trace</span>
+        <pre>Initial:  [9, 3, 7, 1, 5]
+
+Pass 1 (i=0): j goes 0..3
+  j=0: 9>3 → swap → [3, 9, 7, 1, 5]
+  j=1: 9>7 → swap → [3, 7, 9, 1, 5]
+  j=2: 9>1 → swap → [3, 7, 1, 9, 5]
+  j=3: 9>5 → swap → [3, 7, 1, 5, 9]
+End Pass 1: [3, 7, 1, 5, 9]  ← 9 bubbled to end
+
+Pass 2 (i=1): j goes 0..2
+  j=0: 3>7? No
+  j=1: 7>1 → swap → [3, 1, 7, 5, 9]
+  j=2: 7>5 → swap → [3, 1, 5, 7, 9]
+End Pass 2: [3, 1, 5, 7, 9]
+
+Pass 3 (i=2): j goes 0..1
+  j=0: 3>1 → swap → [1, 3, 5, 7, 9]
+  j=1: 3>5? No
+End Pass 3: [1, 3, 5, 7, 9]
+
+Pass 4 (i=3): j goes 0..0
+  j=0: 1>3? No
+End Pass 4: [1, 3, 5, 7, 9]</pre>
+        <strong>Output: <code>1 3 5 7 9 </code></strong><br><br>
+        <strong>Inner loop bound:</strong> <code>j &lt; n-1-i</code> ensures already-sorted elements at the right end are not compared again. This is the correct, optimized form.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q29 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-C">29</span>
+      <div class="q-stem">Trace the string manipulation loop and write the output.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q29</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">String</span> <span class="id">s</span> <span class="op">=</span> <span class="str">"HeLLo"</span>;
+        <span class="ty">String</span> <span class="id">r</span> <span class="op">=</span> <span class="str">""</span>;
+        <span class="kw">for</span> (<span class="ty">int</span> <span class="id">i</span> <span class="op">=</span> <span class="num">0</span>; <span class="id">i</span> <span class="op">&lt;</span> <span class="id">s</span>.length(); <span class="id">i</span><span class="op">++</span>) {
+            <span class="ty">char</span> <span class="id">ch</span> <span class="op">=</span> <span class="id">s</span>.charAt(<span class="id">i</span>);
+            <span class="kw">if</span> (Character.isUpperCase(<span class="id">ch</span>))
+                <span class="id">r</span> <span class="op">+=</span> Character.toLowerCase(<span class="id">ch</span>);
+            <span class="kw">else</span>
+                <span class="id">r</span> <span class="op">+=</span> Character.toUpperCase(<span class="id">ch</span>);
+        }
+        System.out.println(<span class="id">r</span>);
+        System.out.println(<span class="id">r</span>.equals(<span class="id">s</span>));
+        System.out.println(<span class="id">r</span>.equalsIgnoreCase(<span class="id">s</span>));
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Character-by-character Trace</span>
+        <pre>s = "HeLLo"
+i=0: 'H' uppercase → toLowerCase → 'h'   r="h"
+i=1: 'e' lowercase → toUpperCase → 'E'   r="hE"
+i=2: 'L' uppercase → toLowerCase → 'l'   r="hEl"
+i=3: 'L' uppercase → toLowerCase → 'l'   r="hEll"
+i=4: 'o' lowercase → toUpperCase → 'O'   r="hEllO"</pre>
+        <strong>Output:</strong>
+        <pre>hEllO
+false
+true</pre>
+        <strong>Why <code>equals</code> is false:</strong> <code>"hEllO"</code> ≠ <code>"HeLLo"</code> (case-sensitive comparison).<br>
+        <strong>Why <code>equalsIgnoreCase</code> is true:</strong> Both strings contain the same characters ignoring case: H/h, E/e, L/l, L/l, O/o. <em>Note: this is true even though the case was inverted!</em> The underlying letters are identical.
+      </div>
+    </details>
+  </div>
+
+  <!-- Q30 -->
+  <div class="q-block">
+    <div class="q-number-row">
+      <span class="q-badge badge-C">30</span>
+      <div class="q-stem">Trace the entire program and write the exact output. Justify every computed value.</div>
+    </div>
+<pre><span class="kw">public class</span> <span class="id">Q30</span> {
+    <span class="kw">public static void</span> <span class="id">main</span>(<span class="ty">String</span>[] <span class="id">args</span>) {
+        <span class="ty">int</span> <span class="id">a</span> <span class="op">=</span> <span class="num">17</span>, <span class="id">b</span> <span class="op">=</span> <span class="num">5</span>;
+        System.out.println(Math.pow(<span class="num">2</span>, <span class="num">3</span>));
+        System.out.println(<span class="id">a</span> <span class="op">%</span> <span class="id">b</span> <span class="op">+</span> Math.floor(<span class="id">a</span> <span class="op">/</span> <span class="id">b</span>));
+        System.out.println(Math.max(<span class="id">a</span> <span class="op">%</span> <span class="id">b</span>, (<span class="ty">int</span>) Math.sqrt(<span class="id">a</span>)));
+        System.out.println((<span class="ty">int</span>) Math.round(<span class="num">2.5</span>) <span class="op">+</span> (<span class="ty">int</span>) Math.round(<span class="num">3.5</span>));
+        System.out.println(Math.abs(<span class="op">-</span><span class="num">7</span>) <span class="op">+</span> <span class="str">" "</span> <span class="op">+</span> Math.abs(<span class="op">-</span><span class="num">7.9</span>));
+    }
+}</pre>
+    <details>
+      <summary>▶ Answer &amp; Logic</summary>
+      <div class="answer-body">
+        <span class="ans-label">Line-by-line justification</span>
+        <pre>Line 1: Math.pow(2,3) = 8.0   → Output: 8.0
+
+Line 2: a%b = 17%5 = 2 (type int)
+         a/b = 17/5 = 3  ← INTEGER DIVISION (both ints!)
+         Math.floor(3) = 3.0
+         2 + 3.0 = 5.0   ← int+double promotes to double
+         Output: 5.0
+
+Line 3: a%b = 2
+         Math.sqrt(17) ≈ 4.123, (int)4.123 = 4
+         Math.max(2, 4) = 4
+         Output: 4
+
+Line 4: Math.round(2.5) = 3  (rounds up — half-up rule)
+         Math.round(3.5) = 4  (rounds up — half-up rule)
+         (int)3 + (int)4 = 7
+         Output: 7
+
+Line 5: Math.abs(-7) = 7   (returns int)
+         Math.abs(-7.9) = 7.9 (returns double)
+         7 + " " → "7 " (string concat)
+         "7 " + 7.9 → "7 7.9"
+         Output: 7 7.9</pre>
+        <strong>Final Output:</strong>
+        <pre>8.0
+5.0
+4
+7
+7 7.9</pre>
+        <strong>Multi-trap dissection:</strong><br>
+        • Line 2: The most dangerous trap — <code>a/b</code> is integer division first, <em>then</em> passed to <code>Math.floor</code>. Not <code>17.0/5 = 3.4</code>.<br>
+        • Line 4: <code>Math.round</code> uses "round half up" (banker's rounding is NOT used in Java). Both 2.5 and 3.5 round up.<br>
+        • Line 5: <code>Math.abs(-7)</code> returns <code>int 7</code>; <code>Math.abs(-7.9)</code> returns <code>double 7.9</code>. The <code>"7 " + 7.9</code> concatenation produces a string, not a sum.
+      </div>
+    </details>
+  </div>
+
+  <hr class="divider">
+
+  <div class="footer">
+    ICSE COMPUTER APPLICATIONS (86) · ULTIMATE DIFFICULTY PAPER · 30 QUESTIONS · 100 MARKS<br>
+    Based strictly on CISCE Syllabus Scope: Classes IX–X · Java (BlueJ) · © Curriculum Reference Document
+  </div>
+</div>
+</body>
+</html>
