@@ -1,0 +1,246 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:transparent;color:var(--color-text-primary)}
+.shell{display:flex;gap:0;min-height:520px;border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.sidebar{width:200px;min-width:200px;border-right:1px solid var(--color-border-tertiary);background:var(--color-background-secondary);overflow-y:auto}
+.sb-head{padding:12px 14px 10px;font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.04em;border-bottom:1px solid var(--color-border-tertiary)}
+.sb-item{display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;border-left:3px solid transparent;transition:background .12s}
+.sb-item:hover{background:var(--color-background-primary)}
+.sb-item.active{background:var(--color-background-primary);border-left-color:var(--color-text-info)}
+.sb-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
+.sb-label{font-size:12px;line-height:1.3;color:var(--color-text-secondary)}
+.sb-item.active .sb-label{color:var(--color-text-primary);font-weight:500}
+.content{flex:1;overflow-y:auto;padding:0}
+.prob{display:none;padding:20px 22px}
+.prob.show{display:block}
+.prob-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px}
+.prob-num{font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:2px}
+.prob-title{font-size:18px;font-weight:500;color:var(--color-text-primary);line-height:1.25}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;margin-bottom:12px}
+.tag{display:inline-block;padding:2px 7px;border-radius:12px;font-size:11px;margin-right:4px;margin-bottom:4px}
+.section-title{font-size:11px;font-weight:500;letter-spacing:.05em;color:var(--color-text-tertiary);margin:14px 0 6px;text-transform:uppercase}
+.desc{font-size:13px;line-height:1.7;color:var(--color-text-primary);margin-bottom:4px}
+.constraint-box{background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 14px;font-size:12px;line-height:1.9;color:var(--color-text-secondary)}
+.io-block{display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.io-card{background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 12px;flex:1;min-width:160px}
+.io-label{font-size:10px;font-weight:500;letter-spacing:.05em;color:var(--color-text-tertiary);margin-bottom:4px}
+.io-val{font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary);line-height:1.6}
+.edge-box{background:var(--color-background-secondary);border-left:3px solid;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding:10px 14px;font-size:12px;line-height:1.7;color:var(--color-text-secondary)}
+.insight-box{border-radius:var(--border-radius-md);padding:10px 14px;font-size:12px;line-height:1.7}
+.divider{height:1px;background:var(--color-border-tertiary);margin:14px 0}
+</style>
+
+<div class="shell">
+<div class="sidebar">
+  <div class="sb-head">10 Problems</div>
+  <div id="sb"></div>
+</div>
+<div class="content" id="content"></div>
+</div>
+
+<script>
+const C={purple:"#7F77DD",teal:"#1D9E75",coral:"#D85A30",pink:"#D4537E",blue:"#378ADD",amber:"#BA7517",green:"#639922",gray:"#888780",red:"#E24B4A"};
+const BG={purple:"#EEEDFE",teal:"#E1F5EE",coral:"#FAECE7",pink:"#FBEAF0",blue:"#E6F1FB",amber:"#FAEEDA",green:"#EAF3DE",gray:"#F1EFE8",red:"#FCEBEB"};
+const TC={purple:"#3C3489",teal:"#085041",coral:"#712B13",pink:"#72243E",blue:"#0C447C",amber:"#633806",green:"#27500A",gray:"#444441",red:"#791F1F"};
+
+const problems=[
+{id:1,color:"blue",title:"Window of Uniqueness",tags:["String","Two Pointers","Boolean Array"],
+desc:"Given a string <code>s</code>, find the length of the longest contiguous substring that contains <strong>no repeating characters</strong>. You may only use <code>charAt()</code>, <code>length()</code>, and a primitive <code>boolean[]</code> of size 128. No <code>indexOf()</code> or <code>substring()</code> for comparison.",
+constraints:["0 ≤ s.length() ≤ 10,000","s contains only printable ASCII characters (codes 32–127)","Time complexity of brute force is O(n²) — optimal is O(n)"],
+examples:[
+  {input:'s = "abcabcbb"',output:"3",note:'Window: "abc"'},
+  {input:'s = "bbbbb"',output:"1",note:'Window: "b"'},
+  {input:'s = "pwwkew"',output:"3",note:'Window: "wke"'}
+],
+edge:"Empty string → 0. Single character → 1. A string of all identical characters (e.g., \"aaaa\") → 1. Spaces and punctuation are valid characters and must be tracked.",
+brute:"O(n²): for each start index, extend right until a repeat is found using a fresh boolean[128] each time.",
+insight:"Use two int pointers <code>left=0</code> and <code>right=0</code>. When <code>s.charAt(right)</code> is already seen, advance <code>left</code> and un-mark characters until the duplicate is removed. This slides the window in a single pass.",
+},
+{id:2,color:"purple",title:"The Next Arrangement",tags:["Arrays","In-Place","Combinatorics"],
+desc:"Given an <code>int[]</code> of single digits representing a number (e.g., [1,2,3] = 123), rearrange the digits to produce the next lexicographically greater permutation. If already at the largest permutation (digits descending), wrap around to the smallest permutation (ascending). <strong>Do not convert to a number</strong> — operate purely on the array to avoid overflow.",
+constraints:["1 ≤ arr.length ≤ 15","Each element is a digit 0–9","Input will not have a leading zero (but output may, e.g., [2,1,0] → [0,1,2])","You must not use any numeric type larger than long"],
+examples:[
+  {input:"[1, 2, 3]",output:"[1, 3, 2]"},
+  {input:"[3, 2, 1]",output:"[1, 2, 3]",note:"Wraps to smallest"},
+  {input:"[1, 1, 5]",output:"[1, 5, 1]"},
+  {input:"[9, 9, 9]",output:"[9, 9, 9]",note:"Only permutation"}
+],
+edge:"Single-element array → unchanged. All identical digits → unchanged. Array [1,0] → [0,1], i.e., the wrap-around reveals a leading zero — this is valid.",
+brute:"Generate all permutations, sort them, find the current one, return the next. Factorial time — impossibly slow for length 15.",
+insight:"Step 1: scan right-to-left for the first index <code>i</code> where <code>arr[i] < arr[i+1]</code>. If none, reverse entire array. Step 2: find rightmost <code>j</code> where <code>arr[j] > arr[i]</code>; swap. Step 3: reverse the suffix from <code>i+1</code> onward. Total: O(n).",
+},
+{id:3,color:"teal",title:"Valley Counter",tags:["Arrays","Precomputation","Long Arithmetic"],
+desc:"An array <code>heights[]</code> represents an elevation map (each bar width = 1). Compute the total units of rainwater trapped between the bars. Water at position <code>i</code> is bounded by the tallest bar to its left and the tallest bar to its right.",
+constraints:["0 ≤ heights.length ≤ 100,000","0 ≤ heights[i] ≤ 10,000","Answer must be stored in a <code>long</code> variable (can exceed int range)"],
+examples:[
+  {input:"[0,1,0,2,1,0,1,3,2,1,2,1]",output:"6"},
+  {input:"[4,2,0,3,2,5]",output:"9"},
+  {input:"[3,3,3]",output:"0",note:"No valleys — flat roof"}
+],
+edge:"Empty array → 0. Single or two elements → 0 (no enclosed valley). Strictly increasing array → 0 (nothing trapped on the right). A single-column dip between two equal walls traps exactly <code>wall_height - dip_height</code> units.",
+brute:"O(n²): for each index <code>i</code>, scan left to find <code>leftMax</code> and right to find <code>rightMax</code>. Water at <code>i</code> = <code>max(0, min(leftMax, rightMax) - heights[i])</code>.",
+insight:"Precompute two arrays in O(n): <code>leftMax[i]</code> = max of heights[0..i], <code>rightMax[i]</code> = max of heights[i..n-1]. Then one final pass gives the answer. No nested loops.",
+},
+{id:4,color:"coral",title:"Clockwork Grid",tags:["2D Arrays","In-Place","Matrix Math"],
+desc:"Given an <code>n×n</code> integer matrix, rotate it <strong>90° clockwise in-place</strong> — no auxiliary matrix allowed. After rotation, element at <code>(row, col)</code> moves to <code>(col, n-1-row)</code>.",
+constraints:["1 ≤ n ≤ 100","−1000 ≤ matrix[i][j] ≤ 1000","Strictly in-place: a second n×n array is not allowed (a temporary single variable is fine)"],
+examples:[
+  {input:"[[1,2,3],[4,5,6],[7,8,9]]",output:"[[7,4,1],[8,5,2],[9,6,3]]"},
+  {input:"[[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]",output:"[[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]"}
+],
+edge:"1×1 matrix → unchanged. 2×2 matrix: [[a,b],[c,d]] → [[c,a],[d,b]]. Negative values: ensure the swap logic is sign-agnostic. Verify that applying the rotation 4 times returns the original matrix.",
+brute:"O(n²) space: copy the matrix, compute new coordinates for each element. Simple but fails the in-place constraint.",
+insight:"Two steps, both O(n²): (1) Transpose — swap <code>matrix[i][j]</code> with <code>matrix[j][i]</code> for all <code>i < j</code>. (2) Reverse each row — swap <code>matrix[row][left]</code> and <code>matrix[row][right]</code> as pointers converge. The composition of these two operations is exactly a 90° clockwise rotation.",
+},
+{id:5,color:"amber",title:"The Goldbach Machine",tags:["Boolean Array","Sieve","Number Theory"],
+desc:"Goldbach's Conjecture: every even integer > 2 is the sum of two primes. Given Q even integers, for each N: (1) Build a Sieve of Eratosthenes up to N using a <code>boolean[]</code>. (2) Find ALL unique pairs <code>(p1, p2)</code> where <code>p1 ≤ p2</code>, <code>p1+p2=N</code>, both prime. (3) Report the pair minimising <code>|p2-p1|</code> (the most balanced pair).",
+constraints:["1 ≤ Q ≤ 10","4 ≤ N ≤ 1,000,000 (each N is even)","Print pairs in ascending order of p1","Sieve must be implemented using only a boolean[] array — no Math.sqrt shortcut for primality of individual numbers"],
+examples:[
+  {input:"N = 28",output:"Pairs: (5,23),(11,17) | Most balanced: (11,17)"},
+  {input:"N = 10",output:"Pairs: (3,7),(5,5) | Most balanced: (5,5)"},
+  {input:"N = 4",output:"Pairs: (2,2) | Most balanced: (2,2)"}
+],
+edge:"N=4 → only (2,2). Large N like 999,982 will have many pairs. For the sieve, if N=1,000,000 your boolean[] must be of length 1,000,001 — an off-by-one error causes an ArrayIndexOutOfBoundsException. The outer sieve loop should only go to <code>(int)Math.sqrt(N)</code>.",
+brute:"For each N, test each number 2..N for primality individually: O(N√N) per query. Very slow for N=10^6.",
+insight:"The Sieve of Eratosthenes marks composites in O(N log log N). For finding pairs: only iterate <code>p1</code> from 2 to N/2. If <code>isPrime[p1] && isPrime[N-p1]</code>, it's a valid pair. The most balanced pair has the last (largest) p1 in the loop.",
+},
+{id:6,color:"green",title:"String Compression Duel",tags:["String","Char Arrays","Digit Arithmetic"],
+desc:"Implement run-length encoding on a lowercase string: replace consecutive runs with <code>char+count</code>. Rules: (1) If count = 1, omit it (<code>\"c1\"</code> → <code>\"c\"</code>). (2) If the compressed result is <strong>not strictly shorter</strong> than the original, return the original unchanged. (3) You may <strong>not</strong> use <code>String.valueOf()</code>, <code>Integer.toString()</code>, or implicit int-to-string conversion. Build multi-digit counts manually using char arithmetic.",
+constraints:["0 ≤ s.length() ≤ 10,000","s contains only lowercase letters a–z","Count of a single run can reach up to 10,000 (4 digits) — handle all digit counts correctly"],
+examples:[
+  {input:'"aabcccccaaa"',output:'"a2bc5a3"'},
+  {input:'"abcd"',output:'"abcd"',note:"Compressed same length; return original"},
+  {input:'"aaaaaaaaaabc"',output:'"a10bc"',note:"10 a's → a10"}
+],
+edge:"Empty string → \"\". Single character → same character (compressed form has same length). All-same string of length 10,000 → compressed is 5 chars (\"a9999\" wait — actually \"a10000\" which is 6 chars, still much shorter). String where every char is unique (e.g. \"abcde\") → compressed is longer, return original.",
+brute:"Loop through string, count runs, use String.valueOf(count) for conversion. Simple but uses a disallowed method.",
+insight:"To convert an integer <code>count</code> to chars without valueOf: extract digits via repeated <code>% 10</code> and <code>/ 10</code>, store in a small <code>char[]</code> in reverse, then append in forward order. Cast each digit to char: <code>(char)('0' + digit)</code>.",
+},
+{id:7,color:"pink",title:"The Zigzag Cipher",tags:["String","2D Char Arrays","Index Math"],
+desc:"Write characters of string <code>s</code> in a zigzag (fence) pattern across <code>numRows</code> rows, then read row-by-row to produce the encoded string. Store each row as a <code>char[]</code> with a tracked write index. <strong>No String[] row building</strong> — allocate <code>char[][]</code> of dimensions <code>[numRows][s.length()]</code>.",
+constraints:["1 ≤ numRows ≤ s.length()","1 ≤ s.length() ≤ 10,000","s contains printable ASCII characters including spaces and punctuation"],
+examples:[
+  {input:'s="PAYPALISHIRING", numRows=3',output:'"PAHNAPLSIIGYIR"',note:"Rows: P A H N / A P L S I I G / Y I R"},
+  {input:'s="PAYPALISHIRING", numRows=4',output:'"PINALSIGYAHRPI"'},
+  {input:'s="A", numRows=1',output:'"A"'}
+],
+edge:"numRows = 1 → output equals input (all chars in single row, no zigzag). numRows ≥ s.length() → each char occupies its own row; reading top-to-bottom gives the original string. Handle the direction flip precisely: going down at row 0 and going up at row numRows-1.",
+brute:"O(n × numRows): for each row r, scan the entire string and collect characters belonging to row r using modular arithmetic. Correct but wasteful.",
+insight:"Single O(n) pass: maintain <code>int curRow</code> and <code>boolean goingDown</code>. Write <code>s.charAt(i)</code> to <code>rows[curRow]</code>, then increment or decrement curRow based on direction. Flip direction at row 0 and row numRows-1.",
+},
+{id:8,color:"red",title:"Histogram Heights",tags:["Arrays","Precomputation","Amortised Analysis"],
+desc:"Given an array <code>heights[]</code> of histogram bar heights (width=1 each), find the area of the largest rectangle that fits within the histogram. The rectangle height is the minimum height across the bars it spans.",
+constraints:["1 ≤ heights.length ≤ 100,000","0 ≤ heights[i] ≤ 10,000","Answer must be a <code>long</code>","No Stack class is allowed — the O(n) solution must be constructed using only arrays and loops"],
+examples:[
+  {input:"[2,1,5,6,2,3]",output:"10",note:"Bars 2–3, height=5, width=2"},
+  {input:"[2,4]",output:"4"},
+  {input:"[1,1,1,1,1]",output:"5",note:"All 5 bars at height 1"}
+],
+edge:"Single bar → area = that bar's height. All zeros → 0. Strictly decreasing heights → max single-bar area. One very tall bar flanked by zeros → its area = its own height × 1. Heights of [6,7,5,2,4,5,9,3] requires careful boundary detection.",
+brute:"O(n²): for each pair (i,j), find minimum height in the range (inner loop), compute area. Correct but too slow for n=100,000.",
+insight:"Precompute <code>leftBound[i]</code> and <code>rightBound[i]</code> — the index of the nearest shorter bar on each side. Key trick: to find <code>leftBound[i]</code>, start at <code>j=i-1</code>; if <code>heights[j] >= heights[i]</code>, jump <code>j = leftBound[j]-1</code> (skip over already-computed regions). This gives O(n) amortised, using only the precomputed array itself.",
+},
+{id:9,color:"gray",title:"The Anagram Sorter",tags:["String Methods","Char Arrays","2D String Arrays"],
+desc:"Given a <code>String[]</code> of n words, group all anagrams together. Two strings are anagrams if they have the same characters at the same frequencies (case-insensitive). <strong>No HashMap, ArrayList, or any collection class.</strong> Use only <code>String[][]</code>, <code>char[]</code>, and sorting (implement selection sort on char arrays).",
+constraints:["1 ≤ n ≤ 100","1 ≤ each word's length ≤ 100","Strings contain only English letters","Print groups in order of first appearance","Within each group, preserve original order"],
+examples:[
+  {input:'["eat","tea","tan","ate","nat","bat"]',output:"Group 1: eat tea ate\nGroup 2: tan nat\nGroup 3: bat"},
+  {input:'["Listen","Silent","Enlist","Hello"]',output:"Group 1: Listen Silent Enlist\nGroup 2: Hello"}
+],
+edge:"Single string → one group of one. All strings are anagrams of each other → one group. Strings of different lengths can never be anagrams (use length as an early-exit filter). The empty string \"\" is an anagram only of itself.",
+brute:"For each pair (i,j), check if they are anagrams by sorting both char arrays and comparing — O(n² × L log L). Grouping still requires careful 2D array bookkeeping.",
+insight:"(1) For each string, produce a canonical form: <code>toLowerCase()</code>, convert to <code>char[]</code>, sort with selection sort, convert back to a String. (2) Build a <code>String[] canonicals</code> of length n. (3) Use a <code>boolean[] grouped</code> to avoid re-processing. (4) Outer loop: for ungrouped indices, inner loop collects all matching canonicals into one group. Total: O(n² × L log L).",
+},
+{id:10,color:"coral",title:"The Number Polyglot",tags:["Math","Long Arithmetic","Char Arithmetic"],
+desc:"Convert a decimal integer <code>n</code> (possibly negative) to its representation in base <code>b</code> (2 ≤ b ≤ 16). For digits 10–15, use uppercase letters A–F. Then verify by converting the result back to decimal and confirming equality. <strong>Critical:</strong> handle <code>Integer.MIN_VALUE</code> (−2,147,483,648) without overflow — <code>Math.abs(Integer.MIN_VALUE)</code> returns a negative number in int.",
+constraints:["Integer.MIN_VALUE ≤ n ≤ Integer.MAX_VALUE","2 ≤ b ≤ 16","You must use long internally — never int — for the conversion arithmetic","Verification must recompute from the result string using only charAt(), length(), and char arithmetic"],
+examples:[
+  {input:"n=255, b=16",output:'"FF"',note:"Verify: 15×16+15=255 ✓"},
+  {input:"n=-13, b=2",output:'"-1101"',note:"Verify: -(8+4+1)=-13 ✓"},
+  {input:"n=0, b=8",output:'"0"'},
+  {input:"n=Integer.MIN_VALUE, b=16",output:'"-80000000"'}
+],
+edge:"n=0 → \"0\" in any base. n=Integer.MIN_VALUE → must cast to long before any Math.abs(): <code>long val = (long)n</code>. b=10 → trivial but must still pass (digits 0–9 only). A single-digit result like n=7, b=16 → \"7\" (not \"07\").",
+brute:"Standard repeated division using int — silently overflows on MIN_VALUE, producing a wrong answer with no error.",
+insight:"(1) Immediately cast: <code>long val = (n == Integer.MIN_VALUE) ? -(long)Integer.MIN_VALUE : Math.abs((long)n)</code>. Wait — simpler: just <code>long val = n; boolean neg = val < 0; if(neg) val = -val;</code>. (2) Repeatedly take <code>val % b</code> for the digit, collect in a char[] in reverse, flip. (3) For digits ≥ 10, use <code>(char)('A' + digit - 10)</code>.",
+}
+];
+
+const tagColors={
+"String":"blue","Two Pointers":"teal","Boolean Array":"gray","Arrays":"purple","In-Place":"purple","Combinatorics":"pink","Long Arithmetic":"amber","Matrix Math":"coral","2D Arrays":"coral","Boolean Array":"gray","Number Theory":"amber","Sieve":"green","Char Arrays":"blue","Digit Arithmetic":"amber","2D Char Arrays":"teal","Index Math":"pink","Amortised Analysis":"red","Precomputation":"teal","2D String Arrays":"gray","String Methods":"blue","Char Arithmetic":"coral","Math":"amber"
+};
+
+function getTagStyle(t){
+  const c=tagColors[t]||"gray";
+  return `background:${BG[c]};color:${TC[c]};border:1px solid ${C[c]}44`;
+}
+
+const sb=document.getElementById('sb');
+const cont=document.getElementById('content');
+
+problems.forEach((p,i)=>{
+  const item=document.createElement('div');
+  item.className='sb-item'+(i===0?' active':'');
+  item.innerHTML=`<div class="sb-num" style="background:${BG[p.color]};color:${TC[p.color]}">${p.id}</div><div class="sb-label">${p.title}</div>`;
+  item.onclick=()=>activate(i);
+  sb.appendChild(item);
+
+  const div=document.createElement('div');
+  div.className='prob'+(i===0?' show':'');
+  div.id='p'+i;
+
+  const ioHTML=p.examples.map(ex=>`
+    <div class="io-block">
+      <div class="io-card"><div class="io-label">INPUT</div><div class="io-val">${ex.input}</div></div>
+      <div class="io-card"><div class="io-label">OUTPUT</div><div class="io-val">${ex.output}</div>${ex.note?`<div style="font-size:11px;color:var(--color-text-tertiary);margin-top:3px">${ex.note}</div>`:''}</div>
+    </div>`).join('');
+
+  const tagHTML=p.tags.map(t=>`<span class="tag" style="${getTagStyle(t)}">${t}</span>`).join('');
+
+  div.innerHTML=`
+    <div style="border-bottom:1px solid var(--color-border-tertiary);padding-bottom:14px;margin-bottom:2px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+        <div style="background:${BG[p.color]};color:${TC[p.color]};border:1px solid ${C[p.color]}44;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0">${p.id}</div>
+        <div>
+          <div style="font-size:11px;color:var(--color-text-tertiary)">Problem ${p.id} of 10</div>
+          <div style="font-size:17px;font-weight:500">${p.title}</div>
+        </div>
+        <span class="badge" style="margin-left:auto;margin-bottom:0;background:${BG.red};color:${TC.red};border:1px solid ${C.red}44">Hard</span>
+      </div>
+      <div style="margin-top:8px">${tagHTML}</div>
+    </div>
+
+    <div class="section-title">Description</div>
+    <div class="desc">${p.desc}</div>
+
+    <div class="section-title">Constraints</div>
+    <div class="constraint-box">${p.constraints.map(c=>`• ${c}`).join('<br>')}</div>
+
+    <div class="section-title">Examples</div>
+    ${ioHTML}
+
+    <div class="section-title">Edge Case Scenario</div>
+    <div class="edge-box" style="border-color:${C[p.color]}">${p.edge}</div>
+
+    <div class="divider"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div style="flex:1;min-width:200px">
+        <div class="section-title">Brute Force</div>
+        <div class="insight-box" style="background:${BG.gray};border:1px solid var(--color-border-tertiary)">${p.brute}</div>
+      </div>
+      <div style="flex:1;min-width:200px">
+        <div class="section-title">Optimal Insight</div>
+        <div class="insight-box" style="background:${BG[p.color]};border:1px solid ${C[p.color]}33">${p.insight}</div>
+      </div>
+    </div>
+  `;
+  cont.appendChild(div);
+});
+
+function activate(i){
+  document.querySelectorAll('.sb-item').forEach((el,j)=>el.classList.toggle('active',j===i));
+  document.querySelectorAll('.prob').forEach((el,j)=>el.classList.toggle('show',j===i));
+  cont.scrollTop=0;
+}
+</script>
